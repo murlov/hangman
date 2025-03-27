@@ -1,8 +1,9 @@
 package group;
 
 public class Game {
-    void startGame () {
+    public void startGame () {
         CMDOut hangmanOut = new CMDOut();
+
         hangmanOut.printMenu();
     }
 }

@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CMDOut {
-    int printMenu() {
+    public int printMenu() {
 
         int number = 0;
 
@@ -27,6 +27,6 @@ public class CMDOut {
         } while (number != 1 && number != 2);
 
 
-        return 0;
+        return number;
     }
 }
