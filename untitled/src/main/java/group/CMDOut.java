@@ -3,7 +3,7 @@ package group;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class CMDOut {
+public class Interface {
     public int printMenu() {
 
         int number = 0;
