@@ -1,6 +1,7 @@
 package group;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameInterface {
@@ -22,6 +23,7 @@ public class GameInterface {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Некорректный ввод, попробуйте ещё раз.");
+                scanner.nextLine();
             } catch(IllegalArgumentException e) {
                 System.out.println("Такой пункт отсутствует, попробуйте ещё раз.");
             }
@@ -31,7 +33,7 @@ public class GameInterface {
         return number;
     }
 
-    public void printGallows (int remainingAttempts) {
+    public void printGallows(int remainingAttempts) {
         switch (remainingAttempts) {
             case 0:
                 System.out.println( "  +---+\n" +
@@ -102,11 +104,57 @@ public class GameInterface {
         }
     }
 
-    public void printBadResult () {
-        System.out.println("Коньки отбросили! Попытай удачу ещё раз!\n\n");
+    public void printBadResult(MysteryWord mysteryWord) {
+        System.out.println("Мужик отбросил коньки! Попытай удачу ещё раз!\nЗагаданное слово - " + mysteryWord.getName() + "\n");
     }
 
-    public void printGoodResult () {
-        System.out.println("Новый День Рождения! Попытай удачу ещё раз!\n\n");
+    public void printGoodResult() {
+        System.out.println("У мужика новый День Рождения! Попытай удачу ещё раз!\n\n");
+    }
+
+    public void printUsedLetters(List<Character> usedLetters) {
+        System.out.println("Буквы, которые вы уже использовали:");
+        for (Character letter : usedLetters) {
+            System.out.print(letter + " ");
+        }
+        System.out.println();
+    }
+
+    public void printRemainingAttempts(int remainingAttempts) {
+        System.out.println("Осталось попыток: " + remainingAttempts);
+    }
+
+    public void printHiddenVersionOfWord(String mysteryWord) {
+        System.out.println("Загаданное слово: " + mysteryWord);
+    }
+
+    public void printTextForInputLetter() {
+        System.out.print("Введите желаемую букву: ");
+    }
+
+    public Character getLetter(List<Character> usedLetters) {
+        Scanner scanner = new Scanner(System.in);
+        char letter;
+        String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+        do {
+            try {
+                letter = Character.toLowerCase(scanner.next().charAt(0));
+                if (alphabet.indexOf(letter) == -1) {
+                    throw new IllegalArgumentException("Такой буквы нет в алфавите, попробуйте ещё раз!");
+                } else if (usedLetters.indexOf(letter) != -1) {
+                    throw new IllegalArgumentException("Вы уже использовали данную букву, попробуйте ещё раз!");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Некорректный ввод, попробуйте ещё раз!");
+                scanner.nextLine();
+                letter = '0';
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                letter = '0';
+            }
+        } while (letter == '0');
+
+        return letter;
     }
 }

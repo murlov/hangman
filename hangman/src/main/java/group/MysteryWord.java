@@ -10,19 +10,37 @@ public class MysteryWord {
         this.wordWasUsed = false;
     }
 
-    public String getNameOfWord() {
+    public String getName() {
         return nameOfWord;
     }
 
-    public boolean isWordWasUsed () {
+    public boolean wasUsed() {
         return wordWasUsed;
     }
 
-    public void setHiddenVersionOfWord() {
+    public void setHiddenVersion() {
         this.hiddenVersionOfWord = new StringBuilder("_".repeat(nameOfWord.length()));
     }
 
-    public String getHiddenVersionOfWord() {
+    public String getHiddenVersion() {
         return hiddenVersionOfWord.toString();
+    }
+
+    public boolean isLetterInWord(char letter) {
+        return (nameOfWord.indexOf(letter) >= 0);
+    }
+
+    public void updateHiddenVersion(char letter) {
+        int fromIndex = 0;
+        int index;
+        while (nameOfWord.indexOf(letter, fromIndex) >= 0) {
+            index = nameOfWord.indexOf(letter, fromIndex);
+            hiddenVersionOfWord.setCharAt(index, letter);
+            ++fromIndex;
+        }
+    }
+
+    public boolean isGuessed() {
+        return !(hiddenVersionOfWord.toString().contains("_"));
     }
 }

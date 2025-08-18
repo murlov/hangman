@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Game {
     public void startGame () throws FileNotFoundException {
-        String alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 
         Dictionary dictionary = new Dictionary();
         dictionary.readWords();
@@ -17,19 +16,32 @@ public class Game {
 
         while (choice != 2) {
             MysteryWord mysteryWord = dictionary.getRandomWord();
-            mysteryWord.setHiddenVersionOfWord();
+            mysteryWord.setHiddenVersion();
 
             List<Character> usedLetters = new ArrayList<>();
             int remainingAttempts = 6;
+            Character letter;
 
-            while (remainingAttempts != 0) {
+            while (remainingAttempts != 0 && !mysteryWord.isGuessed()) {
                 gameInterface.printGallows(remainingAttempts);
-                remainingAttempts -= 1;
+                gameInterface.printHiddenVersionOfWord(mysteryWord.getHiddenVersion());
+                //System.out.println("(" + mysteryWord.getName() + ")"); //для теста
+                gameInterface.printUsedLetters(usedLetters);
+                gameInterface.printRemainingAttempts(remainingAttempts);
+
+                gameInterface.printTextForInputLetter();
+                letter = gameInterface.getLetter(usedLetters);
+                usedLetters.add(letter);
+                if (mysteryWord.isLetterInWord(letter)) {
+                    mysteryWord.updateHiddenVersion(letter);
+                } else {
+                    --remainingAttempts;
+                }
             }
 
-            if (remainingAttempts <= 0) {
+            if (remainingAttempts == 0) {
                 gameInterface.printGallows(0);
-                gameInterface.printBadResult();
+                gameInterface.printBadResult(mysteryWord);
             } else {
                 gameInterface.printGoodResult();
             }

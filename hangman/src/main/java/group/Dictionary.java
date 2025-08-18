@@ -30,7 +30,7 @@ public class Dictionary {
         MysteryWord word;
         do {
             word = words.get(random.nextInt(words.size()));
-        } while(word.isWordWasUsed());
+        } while(word.wasUsed());
 
         return word;
     }
