@@ -144,6 +144,7 @@ public class GameInterface {
         while (letter == '0'){
             try {
                 buffer = scanner.nextLine();
+
                 letter = Character.toLowerCase(buffer.charAt(0));
 
                 if (Game.alphabet.indexOf(letter) == -1) {
@@ -160,6 +161,8 @@ public class GameInterface {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 letter = '0';
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Ввод не может быть пустым, попробуйте ещё раз!");
             }
         }
 
