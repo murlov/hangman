@@ -15,7 +15,7 @@ public class GameInterface {
         int number = 0;
         Scanner scanner = new Scanner(System.in);
 
-        do {
+        while (number != 1 && number != 2) {
             try {
                 number = scanner.nextInt();
                 if (number != 1 && number != 2) {
@@ -28,7 +28,7 @@ public class GameInterface {
                 System.out.println("Такой пункт отсутствует, попробуйте ещё раз.");
             }
 
-        } while (number != 1 && number != 2);
+        }
 
         return number;
     }
@@ -105,17 +105,21 @@ public class GameInterface {
     }
 
     public void printBadResult(MysteryWord mysteryWord) {
-        System.out.println("Мужик отбросил коньки! Попытай удачу ещё раз!\nЗагаданное слово - " + mysteryWord.getName() + "\n");
+        System.out.println("Проигрыш! Попытай удачу ещё раз!\n" +
+                           "Загаданное слово - " + mysteryWord.getName() + "\n");
     }
 
     public void printGoodResult() {
-        System.out.println("У мужика новый День Рождения! Попытай удачу ещё раз!\n\n");
+        System.out.println("Ты отгадал слово! Попытай удачу ещё раз!\n\n");
     }
 
-    public void printUsedLetters(List<Character> usedLetters) {
+    public void printUsedLetters(StringBuilder usedLetters) {
+        if (usedLetters.isEmpty()) {
+            return;
+        }
         System.out.println("Буквы, которые вы уже использовали:");
-        for (Character letter : usedLetters) {
-            System.out.print(letter + " ");
+        for (int i = 0; i < usedLetters.length(); ++i) {
+            System.out.print(usedLetters.charAt(i) + " ");
         }
         System.out.println();
     }
@@ -132,17 +136,21 @@ public class GameInterface {
         System.out.print("Введите желаемую букву: ");
     }
 
-    public Character getLetter(List<Character> usedLetters) {
+    public Character getLetter(StringBuilder usedLetters) {
         Scanner scanner = new Scanner(System.in);
-        char letter;
-        String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        String buffer;
+        char letter = '0';
 
-        do {
+        while (letter == '0'){
             try {
-                letter = Character.toLowerCase(scanner.next().charAt(0));
-                if (alphabet.indexOf(letter) == -1) {
+                buffer = scanner.nextLine();
+                letter = Character.toLowerCase(buffer.charAt(0));
+
+                if (Game.alphabet.indexOf(letter) == -1) {
                     throw new IllegalArgumentException("Такой буквы нет в алфавите, попробуйте ещё раз!");
-                } else if (usedLetters.indexOf(letter) != -1) {
+                } else if (buffer.length() > 1) {
+                    throw new IllegalArgumentException("Введите, пожалуйста, одну букву из русского алфавита!");
+                } else if (usedLetters.indexOf(String.valueOf(letter)) != -1) {
                     throw new IllegalArgumentException("Вы уже использовали данную букву, попробуйте ещё раз!");
                 }
             } catch (InputMismatchException e) {
@@ -153,7 +161,7 @@ public class GameInterface {
                 System.out.println(e.getMessage());
                 letter = '0';
             }
-        } while (letter == '0');
+        }
 
         return letter;
     }
