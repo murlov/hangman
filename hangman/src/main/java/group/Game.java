@@ -1,5 +1,6 @@
 package group;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,13 @@ public class Game {
     public void startGame () throws FileNotFoundException {
 
         Dictionary dictionary = new Dictionary();
-
-        dictionary.readWords();
+        try {
+            String separator = File.separator;
+            dictionary.readWords("." + separator + "ata" + separator + "russian-nouns-clean.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден!");
+            return;
+        }
 
         GameInterface gameInterface = new GameInterface();
         gameInterface.printMenu();

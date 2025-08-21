@@ -11,9 +11,7 @@ public class Dictionary {
 
     List<MysteryWord> words = new ArrayList<>();
 
-    void readWords () throws FileNotFoundException {
-        String separator = File.separator;
-        String path = "." + separator + "data" + separator + "russian-nouns-clean.txt";
+    void readWords (String path) throws FileNotFoundException {
         File file = new File(path);
 
         Scanner scanner = new Scanner(file);
