@@ -14,7 +14,7 @@ public class Game {
         Dictionary dictionary = new Dictionary();
         try {
             String separator = File.separator;
-            dictionary.readWords("." + separator + "ata" + separator + "russian-nouns-clean.txt");
+            dictionary.readWords("." + separator + "data" + separator + "russian-nouns-clean.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден!");
             return;
